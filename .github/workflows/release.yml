@@ -1,0 +1,31 @@
+name: Release
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set environment variables
+        run: |
+          cat <<EOF >>$GITHUB_ENV
+          BODY_PATH=$RUNNER_TEMP/RELEASE.md
+          EOF
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install gawk
+      - name: Copy missing files
+        run: autoreconf --install
+      - name: Configure
+        run: ./configure --disable-tests
+      - name: Generate distribution
+        run: make dist
+      - name: Generate release notes
+        run: build-aux/release-notes.sh >$BODY_PATH
+      - uses: softprops/action-gh-release@v1
+        with:
+          body_path: ${{ env.BODY_PATH }}
+          files: libi2cd-*.tar.gz

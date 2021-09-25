@@ -19,6 +19,7 @@
 #include "i2cd-private.h"
 
 #include <assert.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
 #include <stdint.h>
@@ -35,6 +36,7 @@
 struct i2cd *i2cd_open(const char *path)
 {
 	struct i2cd *dev;
+	int errsv;
 
 	assert(path != NULL);
 
@@ -45,19 +47,25 @@ struct i2cd *i2cd_open(const char *path)
 	memset(dev, 0, sizeof(*dev));
 
 	dev->path = strdup(path);
-	if (dev->path == NULL) {
-		free(dev);
-		return NULL;
-	}
+	if (dev->path == NULL)
+		goto err;
 
 	dev->fd = open(dev->path, O_RDWR);
-	if (dev->fd < 0) {
-		free(dev->path);
-		free(dev);
-		return NULL;
-	}
+	if (dev->fd < 0)
+		goto err;
 
 	return dev;
+
+err:
+	errsv = errno;
+
+	if (dev->path != NULL)
+		free(dev->path);
+
+	free(dev);
+
+	errno = errsv;
+	return NULL;
 }
 
 struct i2cd *i2cd_open_by_name(const char *name)

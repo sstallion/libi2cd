@@ -8,11 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set environment variables
-        run: |
-          cat <<EOF >>$GITHUB_ENV
-          BODY_PATH=$RUNNER_TEMP/RELEASE.md
-          EOF
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -24,8 +19,11 @@ jobs:
       - name: Generate distribution
         run: make dist
       - name: Generate release notes
-        run: build-aux/release-notes.sh ${GITHUB_REF##*/} >$BODY_PATH
+        run: |
+          echo 'RELEASE_BODY<<' >>$GITHUB_ENV
+          build-aux/release-notes.sh ${GITHUB_REF##*/} >>$GITHUB_ENV
+          echo 'EOF' >>$GITHUB_ENV
       - uses: softprops/action-gh-release@v1
         with:
-          body_path: ${{ env.BODY_PATH }}
+          body: ${{ env.RELEASE_BODY }}
           files: libi2cd-*.tar.gz

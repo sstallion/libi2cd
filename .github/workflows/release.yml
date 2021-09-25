@@ -24,7 +24,7 @@ jobs:
       - name: Generate distribution
         run: make dist
       - name: Generate release notes
-        run: build-aux/release-notes.sh >$BODY_PATH
+        run: build-aux/release-notes.sh ${GITHUB_REF##*/} >$BODY_PATH
       - uses: softprops/action-gh-release@v1
         with:
           body_path: ${{ env.BODY_PATH }}

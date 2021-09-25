@@ -16,7 +16,7 @@
 
 AC_PREREQ([2.69])
 
-AC_INIT([libi2cd], [1.0],
+AC_INIT([libi2cd], [1.0.1],
         [https://github.com/sstallion/libi2cd/issues])
 
 AC_SUBST([PACKAGE_DESCRIPTION], ["Linux kernel I2C character device library"])

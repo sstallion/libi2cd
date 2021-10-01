@@ -53,7 +53,6 @@ struct i2cd *i2cd_open(const char *path)
 		goto err;
 
 	return dev;
-
 err:
 	errsv = errno;
 

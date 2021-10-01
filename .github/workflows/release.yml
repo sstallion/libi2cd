@@ -20,7 +20,7 @@ jobs:
         run: make dist
       - name: Generate release notes
         run: |
-          echo 'RELEASE_BODY<<' >>$GITHUB_ENV
+          echo 'RELEASE_BODY<<EOF' >>$GITHUB_ENV
           build-aux/release-notes.sh ${GITHUB_REF##*/} >>$GITHUB_ENV
           echo 'EOF' >>$GITHUB_ENV
       - uses: softprops/action-gh-release@v1

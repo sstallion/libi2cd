@@ -1,5 +1,11 @@
 # News
 
+## libi2cd v1.0.2
+
+Bug fixes:
+- Minor cosmetic changes for consistency
+- Fixed release notes generation
+
 ## libi2cd v1.0.1
 
 Bug fixes:

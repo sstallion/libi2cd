@@ -18,8 +18,8 @@ include build-aux/coverage.am
 include build-aux/doxygen.am
 
 ACLOCAL_AMFLAGS = -I m4
-AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/src
 AM_CFLAGS = -Wall -Wextra -Wno-unused-parameter
+AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/src
 
 EXTRA_DIST = HACKING.md \
 	     NEWS.md \

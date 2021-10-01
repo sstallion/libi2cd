@@ -40,11 +40,9 @@ struct i2cd *i2cd_open(const char *path)
 
 	assert(path != NULL);
 
-	dev = malloc(sizeof(*dev));
+	dev = calloc(1, sizeof(*dev));
 	if (dev == NULL)
 		return NULL;
-
-	memset(dev, 0, sizeof(*dev));
 
 	dev->path = strdup(path);
 	if (dev->path == NULL)

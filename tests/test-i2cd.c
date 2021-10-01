@@ -61,8 +61,9 @@ void test_i2cd_open(void **state)
 	int mock_fd = 42;
 	struct i2cd mock_dev, *dev;
 
-	expect_value(mock_malloc, size, sizeof(mock_dev));
-	will_return(mock_malloc, &mock_dev);
+	expect_value(mock_calloc, nmemb, 1);
+	expect_value(mock_calloc, size, sizeof(mock_dev));
+	will_return(mock_calloc, &mock_dev);
 
 	expect_string(mock_strdup, s, mock_path);
 	will_return(mock_strdup, mock_path);
@@ -85,8 +86,9 @@ void test_i2cd_open_by_name(void **state)
 	int mock_fd = 42;
 	struct i2cd mock_dev, *dev;
 
-	expect_value(mock_malloc, size, sizeof(mock_dev));
-	will_return(mock_malloc, &mock_dev);
+	expect_value(mock_calloc, nmemb, 1);
+	expect_value(mock_calloc, size, sizeof(mock_dev));
+	will_return(mock_calloc, &mock_dev);
 
 	expect_string(mock_strdup, s, mock_path);
 	will_return(mock_strdup, mock_path);
@@ -109,8 +111,9 @@ void test_i2cd_open_by_number(void **state)
 	int mock_fd = 42;
 	struct i2cd mock_dev, *dev;
 
-	expect_value(mock_malloc, size, sizeof(mock_dev));
-	will_return(mock_malloc, &mock_dev);
+	expect_value(mock_calloc, nmemb, 1);
+	expect_value(mock_calloc, size, sizeof(mock_dev));
+	will_return(mock_calloc, &mock_dev);
 
 	expect_string(mock_strdup, s, mock_path);
 	will_return(mock_strdup, mock_path);
@@ -127,15 +130,16 @@ void test_i2cd_open_by_number(void **state)
 	assert_int_equal(dev->fd, mock_fd);
 }
 
-void test_i2cd_open_fail_malloc(void **state)
+void test_i2cd_open_fail_calloc(void **state)
 {
 	const char *mock_path = "/dev/i2c-0";
 	struct i2cd *dev;
 
-	expect_any(mock_malloc, size);
-	will_return(mock_malloc, NULL);
+	expect_any(mock_calloc, nmemb);
+	expect_any(mock_calloc, size);
+	will_return(mock_calloc, NULL);
 
-	/* Check behavior when malloc fails */
+	/* Check behavior when calloc fails */
 	dev = i2cd_open(mock_path);
 
 	assert_null(dev);
@@ -146,8 +150,9 @@ void test_i2cd_open_fail_strdup(void **state)
 	const char *mock_path = "/dev/i2c-0";
 	struct i2cd mock_dev, *dev;
 
-	expect_any(mock_malloc, size);
-	will_return(mock_malloc, &mock_dev);
+	expect_any(mock_calloc, nmemb);
+	expect_any(mock_calloc, size);
+	will_return(mock_calloc, &mock_dev);
 
 	expect_any(mock_strdup, s);
 	will_return(mock_strdup, NULL);
@@ -165,8 +170,9 @@ void test_i2cd_open_fail_open(void **state)
 	const char *mock_path = "/dev/i2c-0";
 	struct i2cd mock_dev, *dev;
 
-	expect_any(mock_malloc, size);
-	will_return(mock_malloc, &mock_dev);
+	expect_any(mock_calloc, nmemb);
+	expect_any(mock_calloc, size);
+	will_return(mock_calloc, &mock_dev);
 
 	expect_any(mock_strdup, s);
 	will_return(mock_strdup, mock_path);
@@ -338,7 +344,7 @@ int main(void)
 		cmocka_unit_test(test_i2cd_open),
 		cmocka_unit_test(test_i2cd_open_by_name),
 		cmocka_unit_test(test_i2cd_open_by_number),
-		cmocka_unit_test(test_i2cd_open_fail_malloc),
+		cmocka_unit_test(test_i2cd_open_fail_calloc),
 		cmocka_unit_test(test_i2cd_open_fail_strdup),
 		cmocka_unit_test(test_i2cd_open_fail_open),
 		cmocka_unit_test(test_i2cd_close),

@@ -24,7 +24,7 @@
 
 extern bool mocks_enabled;
 
-void *mock_malloc(size_t size);
+void *mock_calloc(size_t nmemb, size_t size);
 char *mock_strdup(const char *s);
 void mock_free(void *ptr);
 int mock_open(const char *pathname, int flags);

@@ -29,21 +29,22 @@
 
 bool mocks_enabled;
 
-void *mock_malloc(size_t size)
+void *mock_calloc(size_t nmemb, size_t size)
 {
+	check_expected(nmemb);
 	check_expected(size);
 
 	return mock_type(void *);
 }
 
-void *__wrap_malloc(size_t size)
+void *__wrap_calloc(size_t nmemb, size_t size)
 {
-	extern void *__real_malloc(size_t size);
+	extern void *__real_calloc(size_t nmemb, size_t size);
 
 	if (mocks_enabled)
-		return mock_malloc(size);
+		return mock_calloc(nmemb, size);
 
-	return __real_malloc(size);
+	return __real_calloc(nmemb, size);
 }
 
 char *mock_strdup(const char *s)

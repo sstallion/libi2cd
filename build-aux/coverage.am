@@ -9,6 +9,7 @@
 if ENABLE_COVERAGE
 COVERAGE_DIR ?= $(top_srcdir)
 COVERAGE_TRACEFILE ?= $(top_srcdir)/coverage.info
+COVERAGE_INCLUDE ?= "$(abs_top_srcdir)/*"
 COVERAGE_HTMLDIR ?= $(top_srcdir)/doc/html/coverage
 COVERAGE_HTMLFLAGS ?= --title "@PACKAGE_STRING@"
 
@@ -23,7 +24,8 @@ coverage-capture:
 	@$(LCOV) --capture \
 		 --directory $(COVERAGE_DIR) \
 		 --output-file $(COVERAGE_TRACEFILE) \
-		 --gcov-tool $(GCOV)
+		 --gcov-tool $(GCOV) \
+		 --include $(COVERAGE_INCLUDE)
 
 .PHONY: coverage
 coverage: coverage-reset check coverage-capture

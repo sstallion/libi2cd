@@ -36,6 +36,9 @@ libi2cd_la_CFLAGS = $(COVERAGE_CFLAGS) $(AM_CFLAGS)
 libi2cd_la_LIBADD = $(COVERAGE_LIBS) $(AM_LIBS)
 libi2cd_la_LDFLAGS = -version-info $(PACKAGE_VERSION_INFO)
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libi2cd.pc
+
 if ENABLE_TESTS
 check_LIBRARIES = tests/libmocks.a
 TESTS_LIBS = $(check_LIBRARIES) $(CMOCKA_LIBS)

@@ -19,11 +19,8 @@ jobs:
       - name: Generate distribution
         run: make dist
       - name: Generate release notes
-        run: |
-          echo 'RELEASE_BODY<<EOF' >>$GITHUB_ENV
-          build-aux/release-notes.sh ${GITHUB_REF##*/} >>$GITHUB_ENV
-          echo 'EOF' >>$GITHUB_ENV
+        run: build-aux/release-notes.sh >${{ github.workspace }}-RELEASE.md
       - uses: softprops/action-gh-release@v1
         with:
-          body: ${{ env.RELEASE_BODY }}
+          body_path: ${{ github.workspace }}-RELEASE.md
           files: libi2cd-*.tar.gz

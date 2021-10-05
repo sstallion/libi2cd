@@ -11,7 +11,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libcmocka-dev libcmocka0
+          sudo apt-get libcmocka-dev
       - name: Copy missing files
         run: autoreconf --install
       - name: Configure

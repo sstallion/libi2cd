@@ -18,8 +18,8 @@ is also available.
 > control, see [HACKING.md].
 
 [cmocka][6] is required for building tests and should be installed using the
-system package manager (eg. `libcmocka-dev` and `libcmocka0` on Debian-based
-distributions via `apt-get`).
+system package manager (eg. `libcmocka-dev` on Debian-based distributions via
+`apt-get`).
 
 If you wish to build without tests, the `--disable-tests` option may be passed
 to `configure`:

@@ -1,5 +1,10 @@
 # News
 
+## libi2cd v1.0.3
+
+Improvements:
+- Install pkg-config file by default
+
 ## libi2cd v1.0.2
 
 Bug fixes:

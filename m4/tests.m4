@@ -6,18 +6,20 @@
 # notice and this notice are preserved.  This file is offered as-is,
 # without any warranty.
 
-# serial 1 tests.m4
+# serial 2 tests.m4
 
 # ENABLE_TESTS
 # ------------
-# Include building tests as a feature, which is enabled by default.
-# An Automake conditional is also defined, named ENABLE_TESTS.
+# Include building tests as a feature, which is enabled by default unless
+# cross-compiling. An Automake conditional is also defined, named ENABLE_TESTS.
 AC_DEFUN([ENABLE_TESTS], [
   AC_MSG_CHECKING([whether to build tests])
   AC_ARG_ENABLE([tests],
                 [AS_HELP_STRING([--disable-tests],
                                 [do not build tests @<:@default=yes@:>@])],
-                [enable_tests=$enableval], [enable_tests=yes])
+                [AS_IF(["x$cross_compiling" != xno], [enable_tests=no],
+                       [enable_tests=$enableval])],
+                [enable_tests=yes])
   AC_MSG_RESULT([$enable_tests])
 
   AM_CONDITIONAL([ENABLE_TESTS], [test "x$enable_tests" != xno])

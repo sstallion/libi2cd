@@ -6,7 +6,7 @@
 # notice and this notice are preserved.  This file is offered as-is,
 # without any warranty.
 
-# serial 1 tests-cmocka.m4
+# serial 2 tests-cmocka.m4
 
 # TESTS_LIB_CMOCKA([FORMAT])
 # --------------------------
@@ -26,7 +26,6 @@ AC_DEFUN([TESTS_LIB_CMOCKA], [
                       #include <stdarg.h>
                       #include <stddef.h>
                       #include <setjmp.h>
-                      #include <stdint.h>
                       #include <cmocka.h>
                     ])
 

@@ -26,7 +26,7 @@ to `configure`:
 
     $ ./configure --disable-tests
 
-To build and install libi2cd, issue the following:
+To build and install, issue the following:
 
     $ ./configure
     $ make all
